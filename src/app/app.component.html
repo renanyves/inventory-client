@@ -1,10 +1,21 @@
-<div class="toolbar" role="banner">
-  <a href="/">
-    <img width="40" alt="logo" src="/assets/icone-papel.png" />
-  </a>
-    <span>Sistema de Controle de Inventário de Papelaria
-    </span>
-</div>
+<mat-toolbar color="primary">
+  <button mat-button routerLink="/product"><mat-icon>home</mat-icon></button>
+  <button mat-button [matMenuTriggerFor]="menu">Produto</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/new/product" >Cadastrar</button>
+    <button mat-menu-item routerLink="/product" >Listar</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="menu2">Categoria</button>
+  <mat-menu #menu2="matMenu">
+    <button mat-menu-item routerLink="/new/category" >Cadastrar</button>
+    <button mat-menu-item routerLink="/category" >Listar</button>
+  </mat-menu>
+  <!-- This fills the remaining space of the current row -->
+  <span style="flex: 1 1 auto;"></span>
+  <span>Sistema de Controle de Inventário de Papelaria</span>
+</mat-toolbar>
 <section class="content" role="main">
-  <router-outlet></router-outlet>
+  <mat-card>
+    <router-outlet></router-outlet>
+  </mat-card>
 </section>

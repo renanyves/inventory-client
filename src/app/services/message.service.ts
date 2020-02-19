@@ -10,12 +10,8 @@ export class MessageService {
 
   constructor(
     private snackBar: MatSnackBar,
-    router: Router
   ) {
-    // Limpa a mensagem da tela toda vez que uma navegação for iniciada
-    router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe(() => {
-      this.snackBar.dismiss();
-    });
+
   }
 
   public dismiss(): void {
@@ -23,7 +19,7 @@ export class MessageService {
   }
 
   public open(msg: string): void {
-    this.snackBar.open(msg, 'Fechar');
+    this.snackBar.open(msg, 'Fechar', {duration: 5000});
   }
 
 }
