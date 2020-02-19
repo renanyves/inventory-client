@@ -1,0 +1,60 @@
+<h1>Cadastro de Produto</h1>
+<div>
+  <form [formGroup]="productForm" (ngSubmit)="save(productForm.value)">
+    <mat-form-field class="min-250 max-350">
+      <input matInput #inputBarcode placeholder="Código de barras" formControlName="barcode" required>
+      <mat-hint align="end">{{inputBarcode.value?.length || 0}}/25</mat-hint>
+      <mat-error *ngFor="let validation of validationMessages.barcode">
+        <mat-error class="error-message"
+          *ngIf="productForm.get('barcode').hasError(validation.type) && (productForm.get('barcode').dirty || productForm.get('barcode').touched)">
+          {{validation.message}}</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="max-350">
+      <input matInput placeholder="Nome do produto" formControlName="name" required>
+      <mat-hint align="end">{{inputDescription.value?.length || 0}}/100</mat-hint>
+      <mat-error *ngFor="let validation of validationMessages.name">
+        <mat-error class="error-message"
+          *ngIf="productForm.get('name').hasError(validation.type) && (productForm.get('name').dirty || productForm.get('name').touched)">
+          {{validation.message}}</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="max-350">
+      <textarea rows="3" matInput #inputDescription placeholder="Descrição do produto" formControlName="description"
+        required></textarea>
+      <mat-hint align="end">{{inputDescription.value?.length || 0}}/300</mat-hint>
+      <mat-error *ngFor="let validation of validationMessages.description">
+        <mat-error class="error-message"
+          *ngIf="productForm.get('description').hasError(validation.type) && (productForm.get('description').dirty || productForm.get('description').touched)">
+          {{validation.message}}</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="max-350">
+      <input matInput placeholder="Quantidade" type="number" formControlName="quantity" required>
+      <mat-error *ngFor="let validation of validationMessages.quantity">
+        <mat-error class="error-message"
+          *ngIf="productForm.get('quantity').hasError(validation.type) && (productForm.get('quantity').dirty || productForm.get('quantity').touched)">
+          {{validation.message}}</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="max-350">
+      <mat-placeholder>Selecionar</mat-placeholder>
+      <mat-select formControlName="category">
+        <mat-option *ngFor="let category of allCategories" [value]="category.id">{{category.name}}</mat-option>
+      </mat-select>
+      <mat-error *ngFor="let validation of validationMessages.category">
+        <mat-error class="error-message"
+          *ngIf="productForm.get('category').hasError(validation.type) && (productForm.get('category').dirty || productForm.get('category').touched)">
+          {{validation.message}}</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <br>
+    <button class="submit-btn" color="primary" mat-raised-button type="submit"
+      [disabled]="!productForm.valid">{{action}}</button>
+    <button color="warn" mat-raised-button type="button" (click)="delete()">Excluir</button>
+    <button mat-raised-button type="button" (click)="cancel()">Cancelar</button>
+  </form>
+
+</div>

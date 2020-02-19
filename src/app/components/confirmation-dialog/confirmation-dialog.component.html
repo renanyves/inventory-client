@@ -1,0 +1,8 @@
+<h1 mat-dialog-title style="font-family: Verdana, sans-serif; font-size:22px">{{data.title}}</h1>
+<div mat-dialog-content>
+  <p>{{data.text}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="true"  color="warn" cdkFocusInitial>{{data.yes}}</button>
+  <button mat-raised-button [mat-dialog-close]="false" color="primary" style="margin-right: 10px; " >{{data.no}}</button>
+</div>

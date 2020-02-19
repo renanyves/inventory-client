@@ -1,0 +1,27 @@
+form {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 40%;
+  margin: 5px;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+.mat-form-field-id {
+  min-width: 40px;
+  max-width: 100px;
+}
+.mat-form-field-name {
+  min-width: 40px;
+  max-width: 350px;
+}
+.mat-form-field-description {
+  min-width: 100px;
+  max-width: 350px;
+}
