@@ -55,23 +55,22 @@ export class CategoryDetailComponent implements OnInit {
     if (idCategory) {
       this.idCategory = +idCategory;
       this.action = Action.SAVE;
-      this.categoryService.findById(this.idCategory).subscribe(product => {
-        console.log(product);
-        this.categoryForm.get('id').setValue(product.id);
-        this.categoryForm.get('name').setValue(product.name);
-        this.categoryForm.get('description').setValue(product.description);
+      this.categoryService.findById(this.idCategory).subscribe(category => {
+        this.categoryForm.get('name').setValue(category.name);
+        this.categoryForm.get('description').setValue(category.description);
       });
     }
   }
 
-  save(product) {
+  save(category) {
     let $save;
     if (this.action === Action.CREATE) {
-      $save = this.categoryService.create(product).pipe(tap(() => {
+      $save = this.categoryService.create(category).pipe(tap(() => {
         this.messageService.open('A categoria foi cadastrada com sucesso');
       }));
     } else {
-      $save = this.categoryService.save(product).pipe(tap(() => {
+      category.id = this.idCategory;
+      $save = this.categoryService.save(category).pipe(tap(() => {
         this.messageService.open('A categoria foi salva com sucesso');
       }));
     }

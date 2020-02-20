@@ -122,6 +122,7 @@ export class ProductDetailComponent implements OnInit {
         this.messageService.open('O produto foi cadastrado com sucesso');
       }));
     } else {
+      product.barcode = this.productBarcode;
       $save = this.productService.save(product).pipe(tap(() => {
         this.messageService.open('O produto foi salvo com sucesso');
       }));
