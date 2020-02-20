@@ -6,8 +6,8 @@
     </mat-form-field>
     <br>
     <mat-form-field class="mat-form-field-name">
-      <input matInput placeholder="Nome do produto" formControlName="name" required>
-      <mat-hint align="end">{{inputDescription.value?.length || 0}}/100</mat-hint>
+      <input matInput #inputName placeholder="Nome da categoria" formControlName="name" required>
+      <mat-hint align="end">{{inputName.value?.length || 0}}/100</mat-hint>
       <mat-error *ngFor="let validation of validationMessages.name">
         <mat-error class="error-message"
           *ngIf="categoryForm.get('name').hasError(validation.type) && (categoryForm.get('name').dirty || categoryForm.get('name').touched)">
@@ -15,7 +15,7 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field class="mat-form-field-description">
-      <textarea rows="3" matInput #inputDescription placeholder="Descrição do produto" formControlName="description"
+      <textarea rows="3" matInput #inputDescription placeholder="Descrição da categoria" formControlName="description"
         required></textarea>
       <mat-hint align="end">{{inputDescription.value?.length || 0}}/300</mat-hint>
       <mat-error *ngFor="let validation of validationMessages.description">
@@ -27,7 +27,7 @@
     <br>
     <button class="submit-btn" color="primary" mat-raised-button type="submit"
       [disabled]="!categoryForm.valid">{{action}}</button>
-    <button color="warn" mat-raised-button type="button" (click)="delete()">Excluir</button>
+    <button color="warn" *ngIf="idCategory" mat-raised-button type="button" (click)="delete()">Excluir</button>
     <button mat-raised-button type="button" (click)="cancel()">Cancelar</button>
   </form>
 

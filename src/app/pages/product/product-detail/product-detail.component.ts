@@ -10,7 +10,7 @@ import { ConfirmationDialogComponent, DialogData } from 'src/app/components/conf
 import { MatDialog } from '@angular/material/dialog';
 
 export enum Action {
-  CREATE = 'Cadastrar', SAVE = 'Salvar'
+  CREATE = 'Cadastrar', SAVE = 'Salvar', VIEW = 'Ver detalhe'
 }
 
 @Component({
@@ -22,12 +22,14 @@ export class ProductDetailComponent implements OnInit {
 
   allCategories: Category[];
   action = Action.CREATE;
-  private barcode: string;
+  readonly Actions = Action;
+  productBarcode: string;
 
   productForm = new FormGroup(
     {
       barcode: new FormControl('', Validators.compose([
         Validators.required,
+        Validators.pattern('^[0-9]*$'),
         Validators.maxLength(25)
       ])),
       name: new FormControl('', Validators.compose([
@@ -40,6 +42,7 @@ export class ProductDetailComponent implements OnInit {
       ])),
       quantity: new FormControl('', Validators.compose([
         Validators.required,
+        Validators.pattern('^[0-9]*$'),
         Validators.min(0)
       ])),
       category: new FormControl('', Validators.compose([
@@ -50,6 +53,7 @@ export class ProductDetailComponent implements OnInit {
   validationMessages = {
     barcode: [
       { type: 'required', message: 'É necessário preencher o código de barras' },
+      { type: 'pattern', message: 'Este campo aceita apenas números' },
       { type: 'maxlength', message: 'O código de barras não pode passar de 25 characters' },
     ],
     name: [
@@ -62,6 +66,7 @@ export class ProductDetailComponent implements OnInit {
     ],
     quantity: [
       { type: 'required', message: 'É necessário preencher a quantidade' },
+      { type: 'pattern', message: 'Este campo aceita apenas números' },
       { type: 'min', message: 'A quantidade deve ser um valor maior ou igual a 0' },
     ],
     category: [
@@ -83,16 +88,29 @@ export class ProductDetailComponent implements OnInit {
       console.log(categories);
       this.allCategories = categories;
     });
-    this.barcode = this.route.snapshot.paramMap.get('id');
-    if (this.barcode) {
-      this.action = Action.SAVE;
-      this.productService.findById(this.barcode).subscribe(product => {
+    this.productBarcode = this.route.snapshot.paramMap.get('id');
+    if (this.productBarcode) {
+      if (this.route.snapshot.data.action && this.route.snapshot.data.action === 'view') {
+        this.action = Action.VIEW;
+      } else {
+        this.action = Action.SAVE;
+      }
+      this.productService.findById(this.productBarcode).subscribe(product => {
         console.log(product);
         this.productForm.get('barcode').setValue(product.barcode);
+        this.productForm.get('barcode').disable();
         this.productForm.get('name').setValue(product.name);
         this.productForm.get('description').setValue(product.description);
         this.productForm.get('quantity').setValue(product.quantity);
         this.productForm.get('category').setValue(product.category.id);
+        if (this.action === Action.VIEW) {
+          this.productForm.get('barcode').disable();
+          this.productForm.get('name').disable();
+          this.productForm.get('description').disable();
+          this.productForm.get('quantity').disable();
+          this.productForm.get('category').disable();
+
+        }
       });
     }
   }
@@ -113,7 +131,11 @@ export class ProductDetailComponent implements OnInit {
       this.router.navigate(['product']);
     }, error => {
       console.log(error);
-      this.messageService.open('Um erro inesperado ocorreu');
+      if (error.status === 303) {
+        this.messageService.open(`O código de barras ${product.barcode} já está cadastrado.`);
+      } else {
+        this.messageService.open('Um erro inesperado ocorreu');
+      }
     });
   }
 
@@ -124,7 +146,7 @@ export class ProductDetailComponent implements OnInit {
   delete() {
     const data = new DialogData();
     data.title = 'Confirmar exclusão';
-    data.text = `Tem certeza que quer excluir o produto de código "${this.barcode}"?`;
+    data.text = `Tem certeza que quer excluir o produto de código "${this.productBarcode}"?`;
 
     const dialogoConfirmacao = this.dialog.open(ConfirmationDialogComponent, {
       width: '450px',
@@ -135,12 +157,12 @@ export class ProductDetailComponent implements OnInit {
       if (res === false) {
         dialogoConfirmacao.close();
       } else {
-        this.productService.delete(this.barcode).subscribe(() => {
+        this.productService.delete(this.productBarcode).subscribe(() => {
           this.messageService.open('Produto excluído com sucesso');
           this.router.navigate(['product']);
         },
-          err => {
-            console.log(err);
+          error => {
+            console.log(error);
             this.messageService.open('Um erro inesperado ocorreu.');
           });
       }

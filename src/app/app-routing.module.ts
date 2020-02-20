@@ -10,8 +10,10 @@ const routes: Routes = [
   { path: 'product', component: ProductListingComponent },
   { path: 'product/:id', component: ProductDetailComponent },
   { path: 'new/product', component: ProductDetailComponent },
+  { path: 'view/product/:id', component: ProductDetailComponent, data: { action: 'view'} },
   { path: 'category', component: CategoryListingComponent },
   { path: 'category/:id', component: CategoryDetailComponent },
+  { path: 'view/category/:id', component: CategoryDetailComponent, data: { action: 'view'}  },
   { path: 'new/category', component: CategoryDetailComponent }
 ];
 

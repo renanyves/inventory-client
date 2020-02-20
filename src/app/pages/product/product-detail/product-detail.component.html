@@ -2,7 +2,7 @@
 <div>
   <form [formGroup]="productForm" (ngSubmit)="save(productForm.value)">
     <mat-form-field class="min-250 max-350">
-      <input matInput #inputBarcode placeholder="Código de barras" formControlName="barcode" required>
+    <input matInput #inputBarcode placeholder="Código de barras" formControlName="barcode" required>
       <mat-hint align="end">{{inputBarcode.value?.length || 0}}/25</mat-hint>
       <mat-error *ngFor="let validation of validationMessages.barcode">
         <mat-error class="error-message"
@@ -11,8 +11,8 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field class="max-350">
-      <input matInput placeholder="Nome do produto" formControlName="name" required>
-      <mat-hint align="end">{{inputDescription.value?.length || 0}}/100</mat-hint>
+      <input matInput #inputName placeholder="Nome do produto" formControlName="name" required>
+      <mat-hint align="end">{{inputName.value?.length || 0}}/100</mat-hint>
       <mat-error *ngFor="let validation of validationMessages.name">
         <mat-error class="error-message"
           *ngIf="productForm.get('name').hasError(validation.type) && (productForm.get('name').dirty || productForm.get('name').touched)">
@@ -51,9 +51,11 @@
       </mat-error>
     </mat-form-field>
     <br>
-    <button class="submit-btn" color="primary" mat-raised-button type="submit"
+    <button *ngIf="action !== Actions.VIEW" class="submit-btn" color="primary" mat-raised-button type="submit"
       [disabled]="!productForm.valid">{{action}}</button>
-    <button color="warn" mat-raised-button type="button" (click)="delete()">Excluir</button>
+    <button *ngIf="action === Actions.SAVE" color="warn" mat-raised-button type="button" (click)="delete()">Excluir</button>
+    <button *ngIf="action === Actions.VIEW" color="primary" mat-raised-button type="button" 
+    [routerLink]="'/product/'+productBarcode" >Editar</button>
     <button mat-raised-button type="button" (click)="cancel()">Cancelar</button>
   </form>
 

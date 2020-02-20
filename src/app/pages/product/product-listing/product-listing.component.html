@@ -30,11 +30,15 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Ações</th>
         <td mat-cell *matCellDef="let row">
+            <button mat-mini-fab color="primary" type="button" (click)="view(row)"
+                matTooltip="Ver detalhe">
+                <mat-icon class="icone-tabela">visibility</mat-icon>
+            </button>
             <button mat-mini-fab color="primary" type="button" (click)="detail(row)"
                 matTooltip="Editar">
                 <mat-icon class="icone-tabela">edit</mat-icon>
             </button>
-            <button mat-mini-fab color="primary" type="button" (click)="delete(row.barcode)"
+            <button mat-mini-fab color="warn" type="button" (click)="delete(row.barcode)"
                 matTooltip="Excluir">
                 <mat-icon class="icone-tabela">delete</mat-icon>
             </button>

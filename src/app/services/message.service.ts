@@ -19,7 +19,7 @@ export class MessageService {
   }
 
   public open(msg: string): void {
-    this.snackBar.open(msg, 'Fechar', {duration: 5000});
+    this.snackBar.open(msg, 'Fechar', {duration: 10000});
   }
 
 }

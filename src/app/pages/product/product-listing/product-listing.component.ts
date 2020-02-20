@@ -79,4 +79,9 @@ export class ProductListingComponent implements OnInit {
       }
     });
   }
+
+  view(row) {
+    this.router.navigate(['view', 'product', row.barcode]);
+  }
+
 }
