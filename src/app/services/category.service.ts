@@ -2,13 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category } from '../model/category';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 
-  private static readonly CategoryEndpoint = 'http://localhost:8080/api/category';
+  private static readonly CategoryEndpoint = environment.urlApi + '/api/category';
 
   constructor(private http: HttpClient) { }
 

@@ -2,13 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../model/product';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private static readonly productEndpoint = 'http://localhost:8080/api/product';
+  private static readonly productEndpoint = environment.urlApi + '/api/product';
 
   constructor(private http: HttpClient) { }
 
