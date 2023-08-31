@@ -40,7 +40,7 @@
     </mat-form-field>
     <br>
     <mat-form-field class="max-350">
-      <mat-placeholder>Selecionar</mat-placeholder>
+      <mat-label>Selecionar</mat-label>
       <mat-select formControlName="category">
         <mat-option *ngFor="let category of allCategories" [value]="category.id">{{category.name}}</mat-option>
       </mat-select>

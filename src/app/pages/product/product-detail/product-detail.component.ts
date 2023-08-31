@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { Category } from 'src/app/model/category';
@@ -25,27 +25,27 @@ export class ProductDetailComponent implements OnInit {
   readonly Actions = Action;
   productBarcode: string;
 
-  productForm = new FormGroup(
+  productForm = new UntypedFormGroup(
     {
-      barcode: new FormControl('', Validators.compose([
+      barcode: new UntypedFormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[0-9]*$'),
         Validators.maxLength(25)
       ])),
-      name: new FormControl('', Validators.compose([
+      name: new UntypedFormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
-      description: new FormControl('', Validators.compose([
+      description: new UntypedFormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(300)
       ])),
-      quantity: new FormControl('', Validators.compose([
+      quantity: new UntypedFormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[0-9]*$'),
         Validators.min(0)
       ])),
-      category: new FormControl('', Validators.compose([
+      category: new UntypedFormControl('', Validators.compose([
         Validators.required,
       ]))
     });
@@ -85,7 +85,6 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryService.findAll().subscribe(categories => {
-      console.log(categories);
       this.allCategories = categories;
     });
     this.productBarcode = this.route.snapshot.paramMap.get('id');
@@ -96,7 +95,6 @@ export class ProductDetailComponent implements OnInit {
         this.action = Action.SAVE;
       }
       this.productService.findById(this.productBarcode).subscribe(product => {
-        console.log(product);
         this.productForm.get('barcode').setValue(product.barcode);
         this.productForm.get('barcode').disable();
         this.productForm.get('name').setValue(product.name);
