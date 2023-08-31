@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
@@ -19,13 +19,13 @@ export class CategoryDetailComponent implements OnInit {
   action = Action.CREATE;
   public idCategory: number;
 
-  categoryForm = new FormGroup(
+  categoryForm = new UntypedFormGroup(
     {
-      name: new FormControl('', Validators.compose([
+      name: new UntypedFormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
-      description: new FormControl('', Validators.compose([
+      description: new UntypedFormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(300)
       ])),
