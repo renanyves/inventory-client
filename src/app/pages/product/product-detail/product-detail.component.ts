@@ -85,7 +85,6 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryService.findAll().subscribe(categories => {
-      console.log(categories);
       this.allCategories = categories;
     });
     this.productBarcode = this.route.snapshot.paramMap.get('id');
@@ -96,7 +95,6 @@ export class ProductDetailComponent implements OnInit {
         this.action = Action.SAVE;
       }
       this.productService.findById(this.productBarcode).subscribe(product => {
-        console.log(product);
         this.productForm.get('barcode').setValue(product.barcode);
         this.productForm.get('barcode').disable();
         this.productForm.get('name').setValue(product.name);

@@ -43,7 +43,6 @@ export class CategoryListingComponent implements OnInit {
 
   private refreshTableData() {
     this.categoryService.findAll().subscribe((products: Category[]) => {
-      console.log(products);
       this.dataSource = new MatTableDataSource(products);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
