@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  urlApi: 'https://inventory-api.mybluemix.net'
+  urlApi: 'https://ryves-inventory-api-92ef59a511eb.herokuapp.com'
 };
